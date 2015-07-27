@@ -1,0 +1,30 @@
+OpenEmbedded/Yocto BSP layer for Electron
+=========================================
+
+This layer provides electron recipe for use with OpenEmbedded and/or Yocto.
+
+This layer depends on:
+
+URI: git://git.openembedded.org/openembedded-core
+branch: master
+revision: HEAD
+
+URI: git://git.openembedded.org/meta-openembedded
+branch: master
+revision: HEAD
+
+URI: https://github.com/kraj/meta-clang.git
+branch: master
+revision: HEAD
+
+URI: https://github.com/OSSystems/meta-browser.git
+branch: master
+revision: HEAD
+
+Contributing
+------------
+
+To contribute to this layer you are encouraged to fork this repository on GitHub to send pull requests.
+
+Maintainers: Luis Gustavo S. Barreto <gustavo@ossystems.com.br>
+	     Otavio Salvador         <otavio@ossystems.com.br>
