@@ -48,27 +48,24 @@ do_compile() {
 }
 
 do_install() {
-    install -d ${D}${libdir}/${PN}/locales
-    install -m 0755 ${S}/out/R/${PN} ${D}${libdir}/${PN}/
-    install -m 0644 ${S}/out/R/icudtl.dat ${D}${libdir}/${PN}/
-    install -m 0644 ${S}/out/R/content_shell.pak ${D}${libdir}/${PN}/
-    install -m 0644 ${S}/out/R/libffmpegsumo.so ${D}${libdir}/${PN}/
-    install -m 0644 ${S}/out/R/libnode.so ${D}${libdir}/${PN}/
-    install -m 0644 ${S}/out/R/snapshot_blob.bin ${D}${libdir}/${PN}/
-    install -m 0644 ${S}/out/R/natives_blob.bin ${D}${libdir}/${PN}/
-
-    for F in ${S}/out/R/locales/*; do
-	install -m 0644 $F ${D}${libdir}/${PN}/locales/
-    done
-
-    install -d ${D}${bindir}/
-    ln -sf ${libdir}/${PN}/${PN} ${D}${bindir}/${PN}
+    install -d      ${D}${libexecdir}/${BPN}
+    install -m 0755 ${S}/out/R/${BPN} ${D}${libexecdir}/${BPN}/
+    install -m 0644 ${S}/out/R/icudtl.dat ${D}${libexecdir}/${BPN}/
+    install -m 0644 ${S}/out/R/content_shell.pak ${D}${libexecdir}/${BPN}/
+    install -m 0644 ${S}/out/R/libffmpegsumo.so ${D}${libexecdir}/${BPN}/
+    install -m 0644 ${S}/out/R/libnode.so ${D}${libexecdir}/${BPN}/
+    install -m 0644 ${S}/out/R/snapshot_blob.bin ${D}${libexecdir}/${BPN}/
+    install -m 0644 ${S}/out/R/natives_blob.bin ${D}${libexecdir}/${BPN}/
+    install -d      ${D}${libexecdir}/${BPN}/locales
+    install -m 0644 ${S}/out/R/locales/* ${D}${libexecdir}/${BPN}/locales/
+    install -d      ${D}${bindir}/
+    ln -sf          ${libexecdir}/${BPN}/${BPN} ${D}${bindir}/${BPN}
 }
 
 do_clean() {
     ./script/clean.py
 }
 
-FILES_${PN} = "${bindir}/${PN} ${libdir}/${PN}/*"
+FILES_${PN} = "${bindir}/${PN} ${libexecdir}/${PN}/*"
 
 TOOLCHAIN = "clang"
