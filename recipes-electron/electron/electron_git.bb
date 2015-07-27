@@ -52,6 +52,8 @@ do_install() {
     install -m 0644 ${S}/out/R/content_shell.pak ${D}${libdir}/${PN}/
     install -m 0644 ${S}/out/R/libffmpegsumo.so ${D}${libdir}/${PN}/
     install -m 0644 ${S}/out/R/libnode.so ${D}${libdir}/${PN}/
+    install -m 0644 ${S}/out/R/snapshot_blob.bin ${D}${libdir}/${PN}/
+    install -m 0644 ${S}/out/R/natives_blob.bin ${D}${libdir}/${PN}/
 
     for F in ${S}/out/R/locales/*; do
 	install -m 0644 $F ${D}${libdir}/${PN}/locales/
