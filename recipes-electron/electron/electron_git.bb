@@ -34,11 +34,13 @@ SRCREV = "135aca02af8aef5792984d47bf1c7a35a11f90a3"
 
 S = "${WORKDIR}/git"
 
+inherit electron-arch
+
 do_configure() {
     # Enable C++11 support at command line because the provided clang was compiled without C++11 support
     export CXX="${CXX} -std=c++11" 
     
-    ./script/bootstrap.py -v --target_arch=ia32
+    ./script/bootstrap.py -v --target_arch=${ELECTRON_ARCH}
 }
 
 do_compile() {
