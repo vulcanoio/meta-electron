@@ -1,4 +1,7 @@
 SUMMARY = "Build cross platform desktop apps with web technologies"
+DESCRIPTION = "The Electron framework lets you write cross-platform \
+desktop applications using JavaScript, HTML and CSS. It is based on \
+io.js and Chromium and is used in the Atom editor."
 HOMEPAGE = "http://electron.atom.io/"
 LICENSE = "MIT"
 
