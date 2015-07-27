@@ -1,0 +1,64 @@
+diff --git a/common.gypi b/common.gypi
+index 84c2b6c..c047065 100644
+--- a/common.gypi
++++ b/common.gypi
+@@ -1,6 +1,5 @@
+ {
+   'includes': [
+-    'toolchain.gypi',
+     'vendor/brightray/brightray.gypi',
+   ],
+   'variables': {
+diff --git a/script/bootstrap.py b/script/bootstrap.py
+index 293d3dc..42c7fa8 100755
+--- a/script/bootstrap.py
++++ b/script/bootstrap.py
+@@ -33,17 +33,11 @@ def main():
+   if sys.platform == 'cygwin':
+     update_win32_python()
+ 
+-  if PLATFORM != 'win32':
+-    update_clang()
+-
+   update_submodules()
+   setup_python_libs()
+-  update_node_modules('.')
++  update_node_modules('.', args.target_arch)
+   bootstrap_brightray(args.dev, args.url, args.target_arch)
+ 
+-  if args.target_arch in ['arm', 'ia32'] and PLATFORM == 'linux':
+-    download_sysroot(args.target_arch)
+-
+   create_chrome_version_h()
+   touch_config_gypi()
+   run_update()
+@@ -103,18 +97,16 @@ def bootstrap_brightray(is_dev, url, target_arch):
+   execute_stdout([sys.executable, bootstrap] + args)
+ 
+ 
+-def update_node_modules(dirname, env=None):
++def update_node_modules(dirname, target_arch, env=None):
+   if env is None:
+     env = os.environ
+   if PLATFORM == 'linux':
+     # Use prebuilt clang for building native modules.
+     llvm_dir = os.path.join(SOURCE_ROOT, 'vendor', 'llvm-build',
+                             'Release+Asserts', 'bin')
+-    env['CC']  = os.path.join(llvm_dir, 'clang')
+-    env['CXX'] = os.path.join(llvm_dir, 'clang++')
+     env['npm_config_clang'] = '1'
+   with scoped_cwd(dirname):
+-    args = [NPM, 'install']
++    args = [NPM, 'install', '--arch=' + target_arch]
+     if is_verbose_mode():
+       args += ['--verbose']
+     # Ignore npm install errors when running in CI.
+@@ -132,7 +124,7 @@ def update_electron_modules(dirname, target_arch):
+   env['npm_config_arch']    = target_arch
+   env['npm_config_target']  = get_atom_shell_version()
+   env['npm_config_disturl'] = 'https://atom.io/download/atom-shell'
+-  update_node_modules(dirname, env)
++  update_node_modules(dirname, target_arch, env)
+ 
+ 
+ def update_win32_python():
